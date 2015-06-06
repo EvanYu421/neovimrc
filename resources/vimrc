@@ -1,0 +1,241 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" 管理vundle插件本身
+Plugin 'gmarik/vundle'
+
+" 我的插件
+
+" 1. 操作相关
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+Plugin 'FelikZ/ctrlp-py-matcher'
+
+" Plugin 'MarcWeber/vim-addon-mw-utils'
+" Plugin 'tomtom/tlib_vim'
+" Plugin 'garbas/vim-snipmate'
+" Plugin 'honza/vim-snippets'
+
+" Plugin 'godlygeek/tabular'
+" Plugin 'tpope/vim-repeat'
+
+" Plugin 'mileszs/ack.vim'
+Plugin 'rking/ag.vim'
+" Plugin 'tpope/vim-surround'
+" Plugin 'szw/vim-ctrlspace'
+" Plugin 'a.vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'Lokaltog/vim-easymotion'
+
+" git
+
+Plugin 'tpope/vim-fugitive'
+
+" 2. ui相关
+" Plugin 'itchyny/lightline.vim'
+Plugin 'altercation/vim-colors-solarized'
+
+" vim 对齐显示
+Plugin 'nathanaelkane/vim-indent-guides'
+
+" 3. 语言相关
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'cakebaker/scss-syntax.vim'
+" Plugin 'othree/html5.vim'
+" Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+" Plugin 'fatih/vim-go'
+" Plugin 'plasticboy/vim-markdown'
+Plugin 'slim-template/vim-slim.git'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-bundler'
+
+" 语法检查
+" Plugin 'scrooloose/syntastic'
+
+" 工具
+" Plugin 'Shougo/vimshell.vim'
+" Plugin 'Shougo/vimproc.vim'
+" Plugin 'tpope/vim-rvm'
+
+call vundle#end()
+filetype plugin indent on
+
+syntax enable
+
+" 设置备份文件的路径
+
+set undodir=~/.vim/.undo/
+set backupdir=~/.vim/.backup/
+" set directory=~/.vim/.backup/
+
+" 打开之后会导致nerdtree插件报错
+" set directory=~/.vim/.swp/
+
+" 设置语法高亮的配色
+set background=dark
+colorscheme solarized
+
+" 自动缩进
+set autoindent
+
+"用<>调整缩进时的长度
+set shiftwidth=2
+
+"制表符的长度，统一为4个空格的宽度
+set tabstop=2
+
+"显示行号
+" set number
+
+"行号栏的宽度
+set numberwidth=4
+
+"禁止自动换行
+set nowrap
+
+"在输入命令时列出匹配项目
+set wildmenu
+
+"显示光标位置
+set ruler
+
+"分割窗口时保持相等的宽/高
+set equalalways
+
+" 设置分割
+" set fillchars+=vert:\|
+hi vertsplit guifg=fg guibg=bg gui=NONE
+
+
+"匹配括号的规则，增加针对html的<>
+set matchpairs=(:),{:},[:],<:>
+
+"让退格，空格，上下箭头遇到行首行尾时自动移到下一行（包括insert模式）
+set whichwrap=b,s,<,>,[,]
+
+"取消自动备份
+"set nobackup
+
+"保存关闭文件之前保留一个备份
+"set writebackup
+
+"设置自定义的<leader>快捷键
+let mapleader=","
+
+""""""""""""""""""""""""""""""
+" NERDTree插件配置
+""""""""""""""""""""""""""""""
+noremap  <F2> :NERDTreeToggle<cr>
+inoremap <F2> <esc>:NERDTreeToggle<cr>
+
+" Current file in nerdtree
+map <F9> :NERDTreeFind<CR>
+inoremap <F9> <esc>:NERDTreeFind<cr>
+
+au Filetype nerdtree setlocal nolist
+
+let NERDTreeHighlightCursorline=1
+let NERDTreeIgnore=['.vim$', '\~$', '.*\.pyc$', 'pip-log\.txt$', 'whoosh_index', 'xapian_index', '.*.pid', 'monitor.py', '.*-fixtures-.*.json', '.*\.o$', 'db.db']
+
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+
+""""""""""""""""""""""""""""""
+" lightline 配置
+""""""""""""""""""""""""""""""
+
+" let g:lightline = {
+"      \ 'colorscheme': 'solarized_dark'
+"      \ }
+" set laststatus=2
+
+
+""""""""""""""""""""""""""""""
+" CtrlP 配置
+""""""""""""""""""""""""""""""
+
+if !has('python')
+    echo 'In order to use pymatcher plugin, you need +python compiled vim'
+else
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+
+let g:ctrlp_lazy_update = 350
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_max_files = 0
+if executable("ag")
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''.swp'' --ignore ''tmp'' --ignore ''.DS_Store'' --ignore ''node_modules'' --hidden -g ""'
+endif
+
+""""""""""""""""""""""""""""""
+" vim-indent-guides 配置
+""""""""""""""""""""""""""""""
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
+
+" 去掉菜单栏和工具栏
+set guioptions-=m
+set guioptions-=T
+
+" 去掉左边滚动条和右边滚动条
+set guioptions-=r
+set guioptions-=L
+
+" 高亮当前行
+set cursorline
+
+set expandtab
+set softtabstop=2
+set shiftwidth=2
+set showmatch
+set incsearch
+
+set winaltkeys=no
+
+filetype plugin on
+
+
+au BufRead,BufNewFile *.jbuilder set ft=ruby syn=ruby
+
+" map <C-c> "+y
+" imap <C-v> <Esc>"+gpa
+" map <C-v> "+gp
+" map <C-S> :w<CR>
+" imap <C-S> <Esc>:w<CR>a
+
+map <C-A> <Home>
+imap <C-A> <Home>
+map <C-E> <End>
+imap <C-E> <End>
+
+" nmap <A-1> :bp<CR>
+" imap <A-1> <Esc>:bp<CR>
+" nmap <A-2> :bn<CR>
+" imap <A-2> <Esc>:bn<CR>
+
+map <F4> <Esc>:A<CR><Esc>
+vmap <S-Tab> <Lt>gv
+vmap <Tab> >gv
+
+" 默认关闭markdown插件的folding
+let g:vim_markdown_folding_disabled=1
+
+
+" CTRL-Tab is next tab
+noremap <C-l> :<C-U>tabnext<CR>
+inoremap <C-l> <C-\><C-N>:tabnext<CR>
+cnoremap <C-l> <C-C>:tabnext<CR>
+
+" CTRL-SHIFT-Tab is previous tab
+noremap <C-h> :<C-U>tabprevious<CR>
+inoremap <C-h> <C-\><C-N>:tabprevious<CR>
+cnoremap <C-h> <C-C>:tabprevious<CR>
+
+noremap  <F3> :set invnumber<CR>
+inoremap <F3> <esc>:set invnumber<CR>

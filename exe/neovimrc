@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "commander/import"
+require "fileutils"
+
+root = File.expand_path('../', __dir__)
+
+program :name, 'install'
+program :version, '1.0.0'
+program :description, 'neovimrc管理'
+
+command :install do |c|
+  c.syntax = 'neovimrc install'
+  c.description = '安装vimrc文件'
+  c.action do |args, options|
+    bundle_dir = File.join(Dir.home, '.vim/bundle')
+    unless File.directory?(bundle_dir)
+      log 'create', bundle_dir
+      FileUtils.mkdir_p bundle_dir
+
+      log 'install', 'vundle'
+      %x{git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim}
+
+      log 'create', 'vimrc'
+      FileUtils.cp File.join(root, 'resources/vimrc'), File.join(Dir.home, '.nvimrc')
+
+      log 'install', 'python support'
+      %x{sudo pip install neovim}
+
+      log 'run', 'nvim +PluginInstall +qall'
+      %x{nvim +PluginInstall +qall}
+
+    end
+  end
+end
+
+
+command :clear do |c|
+  c.syntax = 'neovimrc clear'
+  c.description = '清除neovimrc配置'
+  c.action do |args, options|
+    log 'remove', '~/.nvimrc'
+    FileUtils.rm_rf File.join(Dir.home, '.nvimrc')
+
+    log 'remove', '~/.vim'
+    FileUtils.rm_rf File.join(Dir.home, '.vim')
+  end
+end
+
+command :update do |c|
+  c.syntax = 'neovimrc update'
+  c.description = '更新vimrc文件'
+  c.action do |args, options|
+    log 'update', 'vimrc'
+    FileUtils.cp File.join(root, 'resources/vimrc'), File.join(Dir.home, '.nvimrc')
+
+    log 'run', 'nvim +PluginInstall +qall'
+    %x{nvim +PluginInstall +qall}
+  end
+end
+
+# command :bar do |c|
+#   c.syntax = 'foobar bar [options]'
+#   c.description = 'Display bar with optional prefix and suffix'
+#   c.option '--prefix STRING', String, 'Adds a prefix to bar'
+#   c.option '--suffix STRING', String, 'Adds a suffix to bar'
+#   c.action do |args, options|
+#     options.default :prefix => '(', :suffix => ')'
+#     say "#{options.prefix}bar#{options.suffix}"
+#   end
+# end
