@@ -68,12 +68,11 @@ syntax enable
 
 " 设置备份文件的路径
 
-set undodir=~/.vim/.undo/
-set backupdir=~/.vim/.backup/
-" set directory=~/.vim/.backup/
+" 路径必须存在，否则某些插件/功能会报错
+set undodir=~/.vim/undo/
+set backupdir=~/.vim/backup/
+set directory=~/.vim/swp/
 
-" 打开之后会导致nerdtree插件报错
-" set directory=~/.vim/.swp/
 
 " 设置语法高亮的配色
 set background=dark
@@ -206,8 +205,11 @@ au BufRead,BufNewFile *.jbuilder set ft=ruby syn=ruby
 " map <C-c> "+y
 " imap <C-v> <Esc>"+gpa
 " map <C-v> "+gp
-" map <C-S> :w<CR>
-" imap <C-S> <Esc>:w<CR>a
+map <C-S> :w<CR>
+imap <C-S> <Esc>:w<CR>a
+
+map <D-s> :w<kEnter>
+imap <D-s> <Esc>:w<kEnter>i
 
 map <C-A> <Home>
 imap <C-A> <Home>
@@ -233,9 +235,9 @@ inoremap <C-l> <C-\><C-N>:tabnext<CR>
 cnoremap <C-l> <C-C>:tabnext<CR>
 
 " CTRL-SHIFT-Tab is previous tab
-noremap <C-h> :<C-U>tabprevious<CR>
-inoremap <C-h> <C-\><C-N>:tabprevious<CR>
-cnoremap <C-h> <C-C>:tabprevious<CR>
+noremap <C-k> :<C-U>tabprevious<CR>
+inoremap <C-k> <C-\><C-N>:tabprevious<CR>
+cnoremap <C-k> <C-C>:tabprevious<CR>
 
 noremap  <F3> :set invnumber<CR>
 inoremap <F3> <esc>:set invnumber<CR>

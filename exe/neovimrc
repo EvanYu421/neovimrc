@@ -25,6 +25,15 @@ command :install do |c|
       log 'create', 'vimrc'
       FileUtils.cp File.join(root, 'resources/vimrc'), File.join(Dir.home, '.nvimrc')
 
+      log 'create', 'vim undo dir'
+      FileUtils.mkdir_p File.join(Dir.home, '.vim/undo')
+
+      log 'create', 'vim backup dir'
+      FileUtils.mkdir_p File.join(Dir.home, '.vim/backup')
+
+      log 'create', 'vim swp dir'
+      FileUtils.mkdir_p File.join(Dir.home, '.vim/swp')
+
       log 'install', 'python support'
       %x{sudo pip install neovim}
 
