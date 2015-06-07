@@ -14,9 +14,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'FelikZ/ctrlp-py-matcher'
 
-" Plugin 'MarcWeber/vim-addon-mw-utils'
-" Plugin 'tomtom/tlib_vim'
-" Plugin 'garbas/vim-snipmate'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
 " Plugin 'honza/vim-snippets'
 
 " Plugin 'godlygeek/tabular'
@@ -24,8 +24,8 @@ Plugin 'FelikZ/ctrlp-py-matcher'
 
 " Plugin 'mileszs/ack.vim'
 Plugin 'rking/ag.vim'
-" Plugin 'tpope/vim-surround'
-" Plugin 'szw/vim-ctrlspace'
+Plugin 'tpope/vim-surround'
+Plugin 'szw/vim-ctrlspace'
 " Plugin 'a.vim'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'Lokaltog/vim-easymotion'
@@ -57,8 +57,6 @@ Plugin 'tpope/vim-bundler'
 " Plugin 'scrooloose/syntastic'
 
 " 工具
-" Plugin 'Shougo/vimshell.vim'
-" Plugin 'Shougo/vimproc.vim'
 " Plugin 'tpope/vim-rvm'
 
 call vundle#end()
