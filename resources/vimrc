@@ -39,7 +39,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'altercation/vim-colors-solarized'
 
 " vim 对齐显示
-Plugin 'nathanaelkane/vim-indent-guides'
+" Plugin 'nathanaelkane/vim-indent-guides'
 
 " 3. 语言相关
 Plugin 'kchmck/vim-coffee-script'
@@ -176,9 +176,9 @@ endif
 """"""""""""""""""""""""""""""
 " vim-indent-guides 配置
 """"""""""""""""""""""""""""""
-let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
+" let g:indent_guides_guide_size = 2
+" let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 
 " 去掉菜单栏和工具栏
 set guioptions-=m
