@@ -14,31 +14,32 @@ command :install do |c|
   c.syntax = 'neovimrc install'
   c.description = '安装vimrc文件'
   c.action do |args, options|
-    bundle_dir = File.join(Dir.home, '.vim/bundle')
-    unless File.directory?(bundle_dir)
-      log 'create', bundle_dir
-      FileUtils.mkdir_p bundle_dir
+    neovim_dir = File.join(Dir.home, '.config/nvim')
+    unless File.directory?(neovim_dir)
+      log 'create', "neovim dir ($XDG_CONFIG_HOME) => ~/.config"
+      FileUtils.mkdir_p neovim_dir
 
-      log 'install', 'vundle'
-      %x{git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim}
+      log 'install', 'vim-plug'
+      %x{curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim}
+      # %x{git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim}
 
       log 'create', 'vimrc'
-      FileUtils.cp File.join(root, 'resources/vimrc'), File.join(Dir.home, '.nvimrc')
+      FileUtils.cp File.join(root, 'resources/vimrc'), File.join(neovim_dir, 'init.vim')
 
       log 'create', 'vim undo dir'
-      FileUtils.mkdir_p File.join(Dir.home, '.vim/undo')
+      FileUtils.mkdir_p File.join(neovim_dir, 'undo')
 
       log 'create', 'vim backup dir'
-      FileUtils.mkdir_p File.join(Dir.home, '.vim/backup')
+      FileUtils.mkdir_p File.join(neovim_dir, 'backup')
 
       log 'create', 'vim swp dir'
-      FileUtils.mkdir_p File.join(Dir.home, '.vim/swp')
+      FileUtils.mkdir_p File.join(neovim_dir, 'swp')
 
       log 'install', 'python support'
-      %x{sudo pip install neovim}
+      %x{sudo pip install neovim --upgrade}
 
-      log 'run', 'nvim +PluginInstall +qall'
-      %x{nvim +PluginInstall +qall}
+      log 'install', 'install vim plugin'
+      %x{nvim +PlugInstall}
 
     end
   end
@@ -61,21 +62,18 @@ command :update do |c|
   c.syntax = 'neovimrc update'
   c.description = '更新vimrc文件'
   c.action do |args, options|
+    neovim_dir = File.join(Dir.home, '.config/nvim')
     log 'update', 'vimrc'
-    FileUtils.cp File.join(root, 'resources/vimrc'), File.join(Dir.home, '.nvimrc')
+    FileUtils.cp File.join(root, 'resources/vimrc'), File.join(neovim_dir, 'init.vim')
 
-    log 'run', 'nvim +PluginInstall +qall'
-    %x{nvim +PluginInstall +qall}
+    log 'install', 'python support'
+    %x{sudo pip install neovim --upgrade}
+
+    log 'run', 'nvim +PlugUpgrade'
+    %x{nvim +PlugUpgrade}
+
+    log 'run', 'nvim +PlugUpdate'
+    %x{nvim +PlugUpdate}
   end
 end
 
-# command :bar do |c|
-#   c.syntax = 'foobar bar [options]'
-#   c.description = 'Display bar with optional prefix and suffix'
-#   c.option '--prefix STRING', String, 'Adds a prefix to bar'
-#   c.option '--suffix STRING', String, 'Adds a suffix to bar'
-#   c.action do |args, options|
-#     options.default :prefix => '(', :suffix => ')'
-#     say "#{options.prefix}bar#{options.suffix}"
-#   end
-# end
