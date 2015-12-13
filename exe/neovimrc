@@ -38,8 +38,8 @@ command :install do |c|
       log 'install', 'python support'
       %x{sudo pip install neovim --upgrade}
 
-      log 'install', 'install vim plugin'
-      %x{nvim +PlugInstall}
+      # log 'install', 'install vim plugin'
+      # %x{nvim +PlugInstall}
 
     end
   end
@@ -72,8 +72,8 @@ command :update do |c|
     log 'run', 'nvim +PlugUpgrade'
     %x{nvim +PlugUpgrade}
 
-    log 'run', 'nvim +PlugUpdate'
-    %x{nvim +PlugUpdate}
+    # log 'run', 'nvim +PlugUpdate'
+    # %x{nvim +PlugUpdate}
   end
 end
 
